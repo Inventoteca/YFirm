@@ -77,6 +77,9 @@ void system_init()
   pinMode(cont_monedas, INPUT_PULLUP);
   pinMode(cont_premios, INPUT_PULLUP);
   pinMode(I_maq_onoff, INPUT);               //add current thread to WDT watch
+  pinMode(relay_onoff, OUTPUT); 
+  digitalWrite(relay_onoff,HIGH);
+  
 
   attachInterrupt(cont_monedas, botonpress_monedas, FALLING);
   attachInterrupt(cont_premios, botonpress_premios, FALLING);
