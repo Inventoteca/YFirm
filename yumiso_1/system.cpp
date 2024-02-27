@@ -10,7 +10,7 @@ bool factory_press = false;
 unsigned long factory_time = 0;
 unsigned long prev_factory_time = 0;
 bool reset_time = false;
-volatile bool found_client = false;
+bool machine_on = true;
 
 
 unsigned long mainRefresh = obj["mainTime"].as<uint32_t>();
@@ -77,9 +77,9 @@ void system_init()
   pinMode(cont_monedas, INPUT_PULLUP);
   pinMode(cont_premios, INPUT_PULLUP);
   pinMode(I_maq_onoff, INPUT);               //add current thread to WDT watch
-  pinMode(relay_onoff, OUTPUT); 
-  digitalWrite(relay_onoff,HIGH);
-  
+  pinMode(relay_onoff, OUTPUT);
+  digitalWrite(relay_onoff, LOW);              // LOW to On machine
+
 
   attachInterrupt(cont_monedas, botonpress_monedas, FALLING);
   attachInterrupt(cont_premios, botonpress_premios, FALLING);
@@ -145,17 +145,35 @@ void loadConfig()
   flag_premio = obj["total_gift"].as<long>();
   flag_bolsa = (obj["total"].as<long>()) - (obj["init_bag"].as<long>());
   flag_stock = (obj["total_gift"].as<long>()) - (obj["init_gift"].as<long>());
-  
+
 
   if (obj["costo"].isNull())
   {
     obj["costo"] = 1;
     saveConfig = true;
   }
-  
-  costo = obj["costo"].as<long>();
 
+  costo = obj["costo"].as<long>();
   updated = obj["updated"].as<bool>();
+
+  if (!obj["machine_on"].isNull())
+  {
+    machine_on = obj["machine_on"].as<bool>();
+    if (machine_on == false)
+    {
+      digitalWrite(relay_onoff, HIGH);
+      Serial.println("{\"machine\":\"off\"}");
+    }
+    else
+    {
+      digitalWrite(relay_onoff, LOW);
+      Serial.println("{\"machine\":\"ON\"}");
+    }
+  }
+
+
+
+
 
   if (/*(!obj["reboot"].isNull()) && */(obj["reboot"].as<bool>() == true))
   {

@@ -69,7 +69,7 @@ extern unsigned long mainRefresh;
 extern unsigned long mainTime;
 extern const uint32_t connectTimeoutMs;
 extern unsigned long  s_timestamp;
-extern volatile bool found_client;
+extern bool machine_on;
 
 
 // ----------------------------------------GPS intervalos para gps
