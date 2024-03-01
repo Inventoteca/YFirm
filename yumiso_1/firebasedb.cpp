@@ -114,10 +114,18 @@ void connectFirebase()
   {
     updated = true;
     String storage_id = obj["storage_id"].as<String>();
-    String path = "firmware/"+ obj["firmware"].as<String>();
-    
+    //String key;
+     // key = p.key().c_str(); // Obtener la clave
+    String firname = obj["firmware"].as<String>();
+    String path = "firmware/" + firname;
+
+    // Pasar storage_id y path como const char* usando .c_str()
+    const char* c_storage_id = storage_id.c_str();
+    const char* c_path = path.c_str();
+
     Serial.println("{\"new_firmware\":true}");
-    if (!Firebase.Storage.downloadOTA(&fbdo, storage_id, path, fcsDownloadCallback))
+    Serial.println(c_path);
+    if (!Firebase.Storage.downloadOTA(&fbdo, c_storage_id, c_path, fcsDownloadCallback))
       Serial.println(fbdo.errorReason());
   }
 }

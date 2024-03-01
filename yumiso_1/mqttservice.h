@@ -17,6 +17,8 @@ extern const char* gps_topic;
 extern const char* status_topic;
 extern const char* log_topic;
 extern const char* reporte_topic;
+extern const char* id_premios;
+extern const char* id_juegos;
 
 extern char buffer_union_publish[FILE_SIZE]; 
 extern char buffer_union_subscribe[FILE_SIZE];
@@ -24,12 +26,14 @@ extern char buffer_msg[FILE_SIZE];
 extern char buffer_msg_status[STATUS_SIZE];
 
 extern volatile boolean send_log;
+extern volatile boolean send_reporte;
 
 void callback(char* topic, byte* payload, unsigned int length);
 bool reconnect();
 void mqtt_init();
 bool mqtt_check();
 void mqtt_send();
+void mqtt_send_reporte();
 void mqtt_send_file(String file_to_send);
 
 

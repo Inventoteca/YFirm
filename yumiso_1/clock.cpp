@@ -214,7 +214,7 @@ void update_clock()
       rtcUpdated = true;
       printLocalTime();
     }
-    
+
   }
 
 
@@ -265,7 +265,7 @@ void read_clock()
         Serial.print(':');
         Serial.print(now.second(), DEC);
         Serial.println("\"}");
-
+        status_doc["time"] = now.unixtime();
 
       }
     }
@@ -322,5 +322,11 @@ void printLocalTime()
   Serial.print(':');
   Serial.print(segundo, DEC);
   Serial.println("\"}");
+
+  // Convertir timeinfo a tiempo Unix (epoch time)
+  time_t unixtime = mktime(&timeinfo);
+
+  // Ahora puedes usar unixtime como un valor de tiempo Unix
+  status_doc["time"] = unixtime;
 
 }
