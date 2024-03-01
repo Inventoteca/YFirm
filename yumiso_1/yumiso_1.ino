@@ -50,12 +50,14 @@ void loop()
           status_doc["status"] = "running";
         }
 
-        // ------------------------------------------- Send STATUS
-        //if (send_log == true)
-        //{
-        //mqtt_send();
-        //send_log = false;
-        //}
+        // ------------------------------------------- Send Reporte
+        if (send_reporte  == true)
+        {
+          //mqtt_send_file(file_to_send);
+          send_reporte = false;
+          mqtt_send_reporte();
+          status_doc["status"] = "report";
+        }
 
         // ------------------------------------------- Send LIST
         //if (send_list == true)

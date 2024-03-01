@@ -10,7 +10,7 @@ bool factory_press = false;
 unsigned long factory_time = 0;
 unsigned long prev_factory_time = 0;
 bool reset_time = false;
-volatile bool found_client = false;
+bool machine_on = true;
 
 
 unsigned long mainRefresh = obj["mainTime"].as<uint32_t>();
@@ -156,6 +156,21 @@ void loadConfig()
   obj["gift"] = flag_stock;
 
   updated = obj["updated"].as<bool>();
+
+  if (!obj["machine_on"].isNull())
+  {
+    machine_on = obj["machine_on"].as<bool>();
+    if (machine_on == false)
+    {
+      digitalWrite(relay_onoff, HIGH);
+      Serial.println("{\"machine\":\"off\"}");
+    }
+    else
+    {
+      digitalWrite(relay_onoff, LOW);
+      Serial.println("{\"machine\":\"ON\"}");
+    }
+  }
 
   if (/*(!obj["reboot"].isNull()) && */(obj["reboot"].as<bool>() == true))
   {
