@@ -12,6 +12,41 @@ void setup()
 // ------------------------------------------------------ loop
 void loop()
 {
+  if (Serial.available())
+  {
+    // Suponiendo que los datos del puerto serie terminan con un salto de línea
+    String data = Serial.readStringUntil('\n');
+    Serial.print("Data: ");
+    Serial.println(data);
+
+
+    DynamicJsonDocument doc_patch(FILE_SIZE);
+    deserializeJson(doc_patch, data);
+
+    // Combinar los objetos JSON
+    for (const auto& kv : doc_patch.as<JsonObject>())
+    {
+      obj[kv.key()] = kv.value();
+    }
+
+    serializeJson(obj, Serial);
+    Serial.println();
+    saveConfig = true;
+  }
+
+  // ----------------------------------------- save new data
+  if (saveConfig == true)  // Data change
+  {
+    saveConfig = false;
+
+    Serial.println("{\"upload_config\":true}");
+    saveConfigData();
+    loadConfig();
+    send_log  = true;     // Enviar por MQTT status
+    mainRefresh = millis();
+  }
+
+
   // PRead button for report
   buttonState = digitalRead(BT_REPORT);
   status_doc["maquina_ON"] = bool(digitalRead(I_maq_onoff));
@@ -77,24 +112,6 @@ void loop()
   }
 
 
-
-
-
-
-
-  // ----------------------------------------- save new data
-  if (saveConfig == true)  // Data change
-  {
-    saveConfig = false;
-
-    Serial.println("{\"upload_config\":true}");
-    saveConfigData();
-    loadConfig();
-    send_log  = true;     // Enviar por MQTT status
-    mainRefresh = millis();
-  }
-
-
   // leer boton para imprimir reporte diario
   // Si el botón cambia de no presionado a presionado
   if (lastButtonState == HIGH && buttonState == LOW)
@@ -129,31 +146,5 @@ void loop()
   }
 
   lastButtonState = buttonState;
-
-  if (Serial.available())
-  {
-    // Suponiendo que los datos del puerto serie terminan con un salto de línea
-    String data = Serial.readStringUntil('\n');
-
-
-    DynamicJsonDocument doc_patch(FILE_SIZE);
-    deserializeJson(doc_patch, data);
-
-    //Serial.println("Fast Up Events");
-    //Serial.println();
-    //serializeJson(doc_patch, Serial);
-    //Serial.println();
-
-    // Combinar los objetos JSON
-    for (const auto& kv : doc_patch.as<JsonObject>())
-    {
-      obj[kv.key()] = kv.value();
-    }
-
-    serializeJson(obj, Serial);
-    Serial.println();
-    saveConfig = true;
-  }
-
   esp_task_wdt_reset();
 }

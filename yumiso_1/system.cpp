@@ -146,7 +146,7 @@ void loadConfig()
 
   if (obj["costo"].isNull())
   {
-    obj["costo"] = 1;
+    obj["costo"] = 5;
     saveConfig = true;
   }
 

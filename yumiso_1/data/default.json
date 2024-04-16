@@ -5,7 +5,8 @@
   "test": true,
   "id": "0",
   "enable_wifi": true,
-  "ssid": "Inventoteca_2G",
+  "enable_rtc": true,
+  "ssid": "Inventoteca_3G",
   "pass": "science_7425",
   "email": "yumiso@inventoteca.com",
   "ap": "YumisoAP",
@@ -19,9 +20,10 @@
   "dayOff" : 0,
   "lat": 19.03793, 
   "lon": -98.20346,
-  "total":0,
-  "init_bag": 0,
+  "total":78021,
+  "init_bag": 78014,
   "gift": 0,
+  "costo": 5,
   "enable_rtc": false,
   "enable_ntp": true
 }

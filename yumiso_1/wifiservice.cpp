@@ -143,7 +143,7 @@ void wifi_init()
     Serial.print(auxssid);
 
     // Star WiFi connection
-    //WiFi.begin(auxssid, auxpass);
+    WiFi.begin(auxssid, auxpass);
 
 
     Serial.println("\"}}");
