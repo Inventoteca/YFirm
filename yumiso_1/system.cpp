@@ -160,6 +160,7 @@ void loadConfig()
   if (!obj["machine_on"].isNull())
   {
     machine_on = obj["machine_on"].as<bool>();
+    pinMode(relay_onoff,OUTPUT);
     if (machine_on == false)
     {
       digitalWrite(relay_onoff, HIGH);

@@ -278,6 +278,37 @@ void read_clock()
   {
     printLocalTime();
   }
+
+  if (obj["enable_auto"].as<bool>())
+    auto_onoff();
+}
+
+// ----------------------------------- auto_onoff
+void auto_onoff()
+{
+  //TIME: status_doc["time"]
+  int startHour = obj["startHour"];
+  int endHour = obj["endHour"];
+  if ((hora >= startHour) && (hora < endHour))
+  {
+    if (status_doc["maquina_ON"] == false)
+    {
+      pinMode(relay_onoff, OUTPUT);
+      digitalWrite(relay_onoff, LOW);
+      Serial.println("{\"auto_machine\":\"ON\"}");
+    }
+  }
+  else
+  {
+
+    if (status_doc["maquina_ON"] == true)
+    {
+      pinMode(relay_onoff, OUTPUT);
+      digitalWrite(relay_onoff, HIGH);
+      Serial.println("{\"auto_machine\":\"OFF\"}");
+    }
+
+  }
 }
 
 
