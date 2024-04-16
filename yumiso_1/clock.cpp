@@ -293,9 +293,11 @@ void auto_onoff()
   {
     if (status_doc["maquina_ON"] == false)
     {
-      pinMode(relay_onoff, OUTPUT);
-      digitalWrite(relay_onoff, LOW);
+      //pinMode(relay_onoff, OUTPUT);
+      //digitalWrite(relay_onoff, LOW);
       Serial.println("{\"auto_machine\":\"ON\"}");
+      obj["machine_on"]= true;
+      saveConfig = true;
     }
   }
   else
@@ -303,9 +305,11 @@ void auto_onoff()
 
     if (status_doc["maquina_ON"] == true)
     {
-      pinMode(relay_onoff, OUTPUT);
-      digitalWrite(relay_onoff, HIGH);
+      //pinMode(relay_onoff, OUTPUT);
+      //digitalWrite(relay_onoff, HIGH);
       Serial.println("{\"auto_machine\":\"OFF\"}");
+      obj["machine_on"]= false;
+      saveConfig = true;
     }
 
   }
