@@ -26,14 +26,14 @@ bool wifiAP(bool force)
   wifiManager.setConfigPortalBlocking(false);
   // captive portal redirection
   //wifiManager.setCaptivePortalEnable(false);
-  wifiManager.setTimeout(120);
+  wifiManager.setTimeout(300);
 
   //set config save notify callback
   wifiManager.setSaveParamsCallback(saveConfigCallback);
   wifiManager.setSaveConfigCallback(saveWifiCallback);
   wifiManager.setWebServerCallback(bindServerCallback);
   wifiManager.setBreakAfterConfig(true); // needed to use saveWifiCallback
-  wifiManager.setConfigPortalTimeout(140);
+  wifiManager.setConfigPortalTimeout(300);
   //wifiManager.setParamsPage(true); // move params to seperate page, not wifi, do not combine with setmenu!
 
   //set static ip
@@ -100,7 +100,7 @@ bool wifiAP(bool force)
   {
     if (force == true)
     {
-      wifiManager.startConfigPortal("GasSolutions", "12345678");
+      wifiManager.startConfigPortal("YumisoAP", "12345678");
       Serial.print("{\"Server_force_wdefault\":");
       Serial.print("true");
       Serial.println("}");
@@ -108,7 +108,7 @@ bool wifiAP(bool force)
     }
     else
     {
-      if ( wifiManager.autoConnect("GasSolutions", "12345678"))
+      if ( wifiManager.autoConnect("YumisoAP", "12345678"))
         server_running = false;
       else
         server_running = true;
@@ -143,7 +143,7 @@ void wifi_init()
     Serial.print(auxssid);
 
     // Star WiFi connection
-    WiFi.begin(auxssid, auxpass);
+    //WiFi.begin(auxssid, auxpass);
 
 
     Serial.println("\"}}");
@@ -217,7 +217,7 @@ bool wifi_check()
       Serial.println("{\"wifi\":\"disconnected\"}");
       flag = false;
       if (server_running == false)
-        wifiAP(true);         // run force server
+        wifiAP(false);         // run force server
       else
         Serial.println("{\"server\":\"running\"}");
     }
