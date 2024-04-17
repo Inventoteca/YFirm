@@ -4,15 +4,22 @@
 #include "system.h"
 
 
-#define ENCODE_ADD  0x5C
-#define DISPLAY_ADD  0x5A
-#define TIME_SPACE  10
+#define SERVO_OPEN    0
+#define SERVO_CLOSE   90
+#define SERVO_TEST   180
 
 #define SDA_MAIN    16
 #define SCL_MAIN    17
 
-void I2C_Init();
-void I2C_Get();
-void I2C_Put();
+void InitMotion();
+void GetMotion();
+void GetAngle();
+
+extern Adafruit_MPU6050 mpu;
+extern Servo servo1;
+
+extern bool moved;
+extern int timeServoOn;
+extern int counterServoOn;
 
 #endif  // 

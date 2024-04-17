@@ -29,8 +29,9 @@ void gps_init()
 
   //uint8_t rxPin = 34;
   //uint8_t txPin = 33;
-  Serial2.begin(9600, SERIAL_8N1);  // Inicializa UART1 con 9600 baudios
-  //Serial2.begin(9600, SERIAL_8N1, rxPin, txPin);
+  
+  Serial2.begin(9600, SERIAL_8N1, RXD2, TXD2);
+  //Serial2.begin(9600, SERIAL_8N1);  // Inicializa UART1 con 9600 baudios
   Serial.println(F("{\"gps_init\":true}")); //Serial.println(TinyGPSPlus::libraryVersion());
 }
 

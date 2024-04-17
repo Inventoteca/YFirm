@@ -46,6 +46,8 @@ void loop()
     mainRefresh = millis();
   }
 
+  GetMotion();
+
 
   // PRead button for report
   buttonState = digitalRead(BT_REPORT);
@@ -58,6 +60,7 @@ void loop()
   status_doc["total_gift"] = obj["total_gift"].as<long>();
   status_doc["init_gift"] = obj["init_gift"].as<long>();
   status_doc["gift"] = flag_stock;
+  status_doc["moved"] = moved;
 
 
   // ---------------------------------------------------------------- MAIN TIME
@@ -67,7 +70,7 @@ void loop()
 
     gps_update();
     read_clock();
-
+    GetAngle();
 
     // ----------------------------------------- check internet
 
@@ -108,7 +111,6 @@ void loop()
       serializeJson(status_doc, Serial);
       Serial.println();
     }
-
   }
 
 

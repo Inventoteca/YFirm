@@ -1,6 +1,8 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
+#include <Adafruit_MPU6050.h>
+#include <Adafruit_Sensor.h>
 #include <Arduino.h>
 #include <ArduinoJson.h>
 //#include <vector>
@@ -23,7 +25,7 @@
 
 #include "FS.h"
 #include "SPIFFS.h"
-#include <Wire.h>
+#include <Servo.h>
 #include <WiFiUdp.h>
 #include <NTPClient.h>
 #include "time.h"

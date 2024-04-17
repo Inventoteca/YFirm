@@ -48,7 +48,7 @@ void system_init()
 
 
   delay(100);
-  I2C_Init();
+  InitMotion();
   Serial.println("i2c_Init");
 
 
