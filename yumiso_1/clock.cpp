@@ -317,7 +317,7 @@ void auto_onoff()
   else
   {
 
-    if ((status_doc["maquina_ON"] == true) && (status_doc["status"] != "playing"))
+    if (status_doc["maquina_ON"] == true)
     {
       //pinMode(relay_onoff, OUTPUT);
       //digitalWrite(relay_onoff, HIGH);
