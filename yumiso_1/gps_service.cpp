@@ -38,7 +38,7 @@ void save_gps_log()
     loadConfig();
     Serial.println("{\"upload_config\":true}");
     //saveConfig = true;
-    if (status_doc["status"] != "waiting")
+    if ((status_doc["status"] != "waiting") && (send_log == false))
     {
       status_doc["status"] = "waiting";
       send_log = true;
