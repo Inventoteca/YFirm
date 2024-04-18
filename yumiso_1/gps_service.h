@@ -5,6 +5,7 @@
 extern TinyGPSPlus gps;
 
 
+void gps_distance();
 void save_gps_log();
 void gps_init();
 void gps_update();

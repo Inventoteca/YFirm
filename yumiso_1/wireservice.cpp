@@ -38,7 +38,8 @@ void InitMotion()
   if (mpu.begin())
   {
     Serial.println("{\"accelInit\":true}");
-    status_doc["accelInit"] = true;
+    //status_doc["status"] = "accel init";
+    Serial.println("Motion Init");
 
     //setupt motion detection
     mpu.setHighPassFilter(MPU6050_HIGHPASS_0_63_HZ);
@@ -98,6 +99,8 @@ void GetMotion()
     //servo1.detach();
 
     moved = true;
+    send_log = true;
+    status_doc["status"] = "moved";
     counterServoOn = 0;
   }
 }
@@ -122,7 +125,7 @@ void GetAngle()
 
 
 
-  if ((abs(roll) > 10 ) || (abs(pitch) > 10 ))
+  if ((abs(roll) >= 10.0 ) || (abs(pitch) >= 10.0 ))
   {
 
     servo1.attach(servo1Pin);
@@ -134,6 +137,8 @@ void GetAngle()
     Serial.println(pitch);
 
     moved = true;
+    send_log = true;
+    status_doc["status"] = "moved";
     counterServoOn = 0;
   }
 

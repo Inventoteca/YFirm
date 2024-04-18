@@ -63,6 +63,7 @@ void loop()
   status_doc["moved"] = moved;
 
 
+
   // ---------------------------------------------------------------- MAIN TIME
   if (millis() - mainRefresh > mainTime)
   {
@@ -71,6 +72,12 @@ void loop()
     gps_update();
     read_clock();
     GetAngle();
+    
+    if ((status_doc["maquina_ON"] == false) && (obj["machine_on"] == true))
+    {
+      status_doc["status"] = "NO ENERGY";
+      send_log = true;
+    }
 
     // ----------------------------------------- check internet
 
@@ -85,7 +92,7 @@ void loop()
           //mqtt_send_file(file_to_send);
           send_log = false;
           mqtt_send();
-          status_doc["status"] = "running";
+
         }
 
         // ------------------------------------------- Send Reporte

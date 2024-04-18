@@ -28,5 +28,7 @@
   "enable_ntp": true,
   "startHour": 9,
   "endHour": 22,
-  "enable_auto": true
+  "enable_auto": true,
+  "fix_lat": 19.03036033,
+  "fix_lon": -98.32207933
 }

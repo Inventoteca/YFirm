@@ -2,6 +2,26 @@
 
 TinyGPSPlus gps;
 
+// ------------------------------------------------------- gps_distance
+void gps_distance()
+{
+  double distance = TinyGPSPlus::distanceBetween(
+                      obj["lat"].as<double>(),
+                      obj["lon"].as<double>(),
+                      obj["fix_lat"].as<double>(),
+                      obj["fix_lon"].as<double>());
+
+
+  if (distance > 200)
+  {
+    Serial.print("Distancia: ");
+    Serial.print(distance);
+    Serial.println(" m");
+    status_doc["status"] = "gps_alert";
+    send_log = true;
+  }
+}
+
 
 // ------------------------------------------------------ save gps_log
 void save_gps_log()
@@ -18,7 +38,13 @@ void save_gps_log()
     loadConfig();
     Serial.println("{\"upload_config\":true}");
     //saveConfig = true;
+    if (status_doc["status"] != "waiting")
+    {
+      status_doc["status"] = "waiting";
+      send_log = true;
+    }
 
+    gps_distance();
 
   }
 }
@@ -29,7 +55,7 @@ void gps_init()
 
   //uint8_t rxPin = 34;
   //uint8_t txPin = 33;
-  
+
   Serial2.begin(9600, SERIAL_8N1, RXD2, TXD2);
   //Serial2.begin(9600, SERIAL_8N1);  // Inicializa UART1 con 9600 baudios
   Serial.println(F("{\"gps_init\":true}")); //Serial.println(TinyGPSPlus::libraryVersion());
@@ -108,6 +134,8 @@ void gps_update()
   status_doc["gps_status"] = obj["gps_status"];
   status_doc["lat"] = obj["lat"];
   status_doc["lon"] = obj["lon"];
+  status_doc["fix_lat"] = obj["lat"];
+  status_doc["fix_lon"] = obj["lon"];
 
 
 }

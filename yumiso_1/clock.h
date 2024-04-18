@@ -28,6 +28,7 @@ extern bool rtcUpdated;
 extern bool rtc_ready;
 extern bool rtc_enable;
 extern bool ntp_enable;
+extern bool ntp_ready;
 
 
 extern WiFiUDP ntpUDP;

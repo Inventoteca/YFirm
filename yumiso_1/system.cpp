@@ -49,8 +49,6 @@ void system_init()
 
   delay(100);
   InitMotion();
-  Serial.println("i2c_Init");
-
 
   status_doc["ver"] = VERSION;
 

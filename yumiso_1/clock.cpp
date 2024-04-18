@@ -23,6 +23,7 @@ bool rtcUpdated = false;
 bool rtc_ready = false;
 bool rtc_enable = false;
 bool ntp_enable = false;
+bool ntp_ready = false;
 
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, ntpServer, gmtOffset_sec, daylightOffset_sec);
@@ -30,6 +31,10 @@ NTPClient timeClient(ntpUDP, ntpServer, gmtOffset_sec, daylightOffset_sec);
 // ---------------------------------- init_clock
 void init_clock()
 {
+
+  gmtOffset_sec = obj["gmtOff"].as<int32_t>();
+  daylightOffset_sec = obj["dayOff"].as<int32_t>();
+  
   if (rtc_enable)
   {
     delay(100);
@@ -43,8 +48,7 @@ void init_clock()
     {
       Serial.println("{\"rtc_init\":true}");
       delay(10);
-      gmtOffset_sec = obj["gmtOff"].as<int32_t>();
-      daylightOffset_sec = obj["dayOff"].as<int32_t>();
+
       rtc_ready = true;
 
       // For New devices
@@ -76,6 +80,8 @@ void init_clock()
       {
         Serial.println("RTC ERROR Reboot...");
         delay(1000);
+        rtc_ready = false;
+        return;
         //ESP.restart();  // Reiniciar el ESP32
       }
 
@@ -93,8 +99,8 @@ void init_clock()
       Serial.print(now.second(), DEC);
       Serial.println("\"}");
 
-      gmtOffset_sec = obj["gmtOff"].as<int32_t>();
-      daylightOffset_sec = obj["dayOff"].as<int32_t>();
+      //gmtOffset_sec = obj["gmtOff"].as<int32_t>();
+      //daylightOffset_sec = obj["dayOff"].as<int32_t>();
 
       Serial.print("{\"gmtOff\":");
       Serial.print(gmtOffset_sec);
@@ -279,8 +285,14 @@ void read_clock()
     printLocalTime();
   }
 
-  if (obj["enable_auto"].as<bool>())
+  if ((obj["enable_auto"].as<bool>()) && ((rtc_ready == true) || (ntp_ready == true)))
     auto_onoff();
+  else if ((obj["enable_auto"].as<bool>()) && (rtc_ready == false && ntp_ready == false))
+  {
+    obj["machine_on"] = true;
+    saveConfig = true;
+    Serial.println("{\"auto_machine\":\"DISABLED_NOTIME\"}");
+  }
 }
 
 // ----------------------------------- auto_onoff
@@ -296,8 +308,10 @@ void auto_onoff()
       //pinMode(relay_onoff, OUTPUT);
       //digitalWrite(relay_onoff, LOW);
       Serial.println("{\"auto_machine\":\"ON\"}");
-      obj["machine_on"]= true;
+      obj["machine_on"] = true;
+      status_doc["status"] = "auto ON";
       saveConfig = true;
+      send_log = true;
     }
   }
   else
@@ -308,11 +322,14 @@ void auto_onoff()
       //pinMode(relay_onoff, OUTPUT);
       //digitalWrite(relay_onoff, HIGH);
       Serial.println("{\"auto_machine\":\"OFF\"}");
-      obj["machine_on"]= false;
+      obj["machine_on"] = false;
+      status_doc["status"] = "auto OFF";
       saveConfig = true;
+      send_log = true;
     }
 
   }
+  Serial.println("{\"auto_machine\":\"check\"}");
 }
 
 
@@ -333,35 +350,39 @@ void printLocalTime()
   if (!getLocalTime(&timeinfo))
   {
     Serial.println("Failed to obtain time");
+    ntp_ready = false;
     return;
   }
 
-  //Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");   // Comment for ESP8266
-  mes = timeinfo.tm_mon + 1;  // Adjust for 0-based indexing
-  anio = timeinfo.tm_year + 1900; // Adjust for years since 1900
-  dia_hoy = timeinfo.tm_mday;
-  hora = timeinfo.tm_hour;
-  minuto = timeinfo.tm_min;
-  segundo = timeinfo.tm_sec;
+  else {
+    //Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");   // Comment for ESP8266
+    mes = timeinfo.tm_mon + 1;  // Adjust for 0-based indexing
+    anio = timeinfo.tm_year + 1900; // Adjust for years since 1900
+    dia_hoy = timeinfo.tm_mday;
+    hora = timeinfo.tm_hour;
+    minuto = timeinfo.tm_min;
+    segundo = timeinfo.tm_sec;
 
-  Serial.print("{\"time\":\"");
-  Serial.print(anio, DEC);
-  Serial.print('/');
-  Serial.print(mes, DEC);
-  Serial.print('/');
-  Serial.print(dia_hoy, DEC);
-  Serial.print(' ');
-  Serial.print(hora, DEC);
-  Serial.print(':');
-  Serial.print(minuto, DEC);
-  Serial.print(':');
-  Serial.print(segundo, DEC);
-  Serial.println("\"}");
+    Serial.print("{\"time\":\"");
+    Serial.print(anio, DEC);
+    Serial.print('/');
+    Serial.print(mes, DEC);
+    Serial.print('/');
+    Serial.print(dia_hoy, DEC);
+    Serial.print(' ');
+    Serial.print(hora, DEC);
+    Serial.print(':');
+    Serial.print(minuto, DEC);
+    Serial.print(':');
+    Serial.print(segundo, DEC);
+    Serial.println("\"}");
 
-  // Convertir timeinfo a tiempo Unix (epoch time)
-  time_t unixtime = mktime(&timeinfo);
+    // Convertir timeinfo a tiempo Unix (epoch time)
+    time_t unixtime = mktime(&timeinfo);
 
-  // Ahora puedes usar unixtime como un valor de tiempo Unix
-  status_doc["time"] = unixtime;
+    // Ahora puedes usar unixtime como un valor de tiempo Unix
+    status_doc["time"] = unixtime;
+    ntp_ready = true;
+  }
 
 }

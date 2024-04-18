@@ -238,9 +238,17 @@ void callback(char* topic, byte* payload, unsigned int length)
         }
 
         if (key == "yuser")
+        {
           send_reporte = true;
-        else
+          saveConfig = true;
+        }
+        else if (key == "test")
+        {
           send_log = true;
+          saveConfig = false;
+        }
+        else
+          saveConfig = true;
       }
     }
 
@@ -249,7 +257,7 @@ void callback(char* topic, byte* payload, unsigned int length)
     Serial.println();
 
 
-    saveConfig = true;
+    send_log = true;
     return;
   }
   //else if()

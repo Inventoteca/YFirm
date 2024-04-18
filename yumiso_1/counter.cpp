@@ -20,9 +20,11 @@ void IRAM_ATTR botonpress_monedas()
   obj["bag"] = flag_bolsa;
   flag_games = flag_bolsa / costo;
   obj["games"] = flag_games;
+  status_doc["status"] = "playing";
   //Serial.print("M");Serial.println(flag_moneda);
   saveConfig = true;
   send_log  = true;
+  
   return;
 }
 
@@ -35,6 +37,7 @@ void IRAM_ATTR botonpress_premios()
   obj["total_gift"] = flag_premio;
   flag_stock = (obj["t_gift"].as<long>()) - (obj["i_gift"].as<long>());
   obj["gift"] = flag_stock;
+  status_doc["status"] = "gift";
   //Serial.print("P");Serial.println(flag_premio);
   saveConfig = true;
   send_log  = true;
