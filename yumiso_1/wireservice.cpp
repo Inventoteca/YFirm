@@ -148,9 +148,15 @@ void GetAngle()
     counterServoOn++;
     if (counterServoOn >= 2)
     {
+      servo1.write(SERVO_TEST);
+    }
+
+    if (counterServoOn >= 3)
+    {
       servo1.write(SERVO_OPEN);
     }
-    if ((counterServoOn >= 3) || (servo1.read() == SERVO_OPEN))
+
+    if ((counterServoOn >= 4) || (servo1.read() == SERVO_OPEN))
     {
       moved = false;
       counterServoOn = 0;
