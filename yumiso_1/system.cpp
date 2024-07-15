@@ -48,7 +48,7 @@ void system_init()
 
 
   delay(100);
-  InitMotion();
+  //InitMotion();
 
   status_doc["ver"] = VERSION;
 
@@ -59,8 +59,8 @@ void system_init()
     Cfg_get();  // Load File from spiffs
     loadConfig();       // Load and update behaivor of system
     wifi_init();
-    mqtt_init();
-    mqtt_check();
+    //mqtt_init();
+    //mqtt_check();
     rtcUpdated = false;
     ntpConnected = false;
     init_clock();        // I2C for clock

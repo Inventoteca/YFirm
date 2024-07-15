@@ -46,7 +46,7 @@ void loop()
     mainRefresh = millis();
   }
 
-  GetMotion();
+  //GetMotion();
 
 
   // PRead button for report
@@ -71,7 +71,7 @@ void loop()
 
     gps_update();
     read_clock();
-    GetAngle();
+    //GetAngle();
     
     if ((status_doc["maquina_ON"] == false) && (obj["machine_on"] == true))
     {
@@ -84,7 +84,7 @@ void loop()
     if (wifi_check())
     {
       update_clock();
-      if (mqtt_check())
+      /*if (mqtt_check())
       {
         // ------------------------------------------- Send Log STATUS
         if (send_log  == true)
@@ -110,7 +110,7 @@ void loop()
         //mqtt_send_list();
         //send_list = false;
         //}
-      }
+      }*/
     }
 
     if (obj["test"].as<bool>() == true)
