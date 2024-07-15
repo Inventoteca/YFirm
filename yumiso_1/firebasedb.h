@@ -31,6 +31,7 @@ void fcsDownloadCallback(FCS_DownloadStatusInfo info);
 void streamCallback(FirebaseStream data);
 void streamTimeoutCallback(bool timeout);
 void connectFirebase();
+void readCounterValue(String collection, String document, String field) ;
 
 
 #endif  // FIREBASEDB_H

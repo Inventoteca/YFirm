@@ -61,6 +61,9 @@ void system_init()
     wifi_init();
     //mqtt_init();
     //mqtt_check();
+
+    connectFirebase();
+    
     rtcUpdated = false;
     ntpConnected = false;
     init_clock();        // I2C for clock

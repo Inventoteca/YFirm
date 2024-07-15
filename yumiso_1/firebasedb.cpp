@@ -20,6 +20,40 @@ FirebaseData stream;
 
 
 
+// -------------------------------------------------------------- readCounterValue
+void readCounterValue(String collection, String document, String field) {
+  // Asegúrate de que obj está correctamente inicializado y contiene "storage_id"
+  String project_id = obj["storage_id"].as<String>();
+  
+  if (Firebase.Firestore.getDocument(&fbdo, project_id.c_str(), "", collection.c_str(), document.c_str())) {
+    //FirebaseJson json = fbdo.jsonData();  // Crea un nuevo objeto JSON y copia los datos
+    //FirebaseJsonData jsonData;
+    
+    //if (json.get(jsonData, field.c_str())) 
+    //{
+      //if (jsonData.typeNum == FirebaseJson::JSON_TYPE_INT) 
+      //{
+        //int counterValue = jsonData.intValue;
+        Serial.printf("Counter value for %s:\n", field.c_str());
+      //} 
+      //else 
+      //{
+        //Serial.printf("Field %s is not of type int\n", field.c_str());
+     // }
+    //} 
+    //else 
+    //{
+      //Serial.printf("Field %s not found in document %s\n", field.c_str(), document.c_str());
+    //}
+  } 
+  else 
+  {
+    Serial.printf("Error reading document: %s\n", fbdo.errorReason().c_str());
+  }
+}
+
+
+
 // ----------------------------------- OTA The Firebase Storage download callback function
 void fcsDownloadCallback(FCS_DownloadStatusInfo info)
 {
@@ -112,9 +146,9 @@ void connectFirebase()
   }
 
 
-  if (!updated)
+  if (updated)
   {
-    updated = true;
+    updated = false;
     String storage_id = obj["storage_id"].as<String>();
     //String key;
      // key = p.key().c_str(); // Obtener la clave

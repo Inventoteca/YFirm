@@ -6,6 +6,8 @@
 void setup()
 {
   system_init();
+
+  readCounterValue("maquinas", "M-E2-EA-MUEE-0", "address");
 }
 
 
