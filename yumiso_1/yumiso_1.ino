@@ -42,7 +42,7 @@ void loop()
     Serial.println("{\"upload_config\":true}");
     saveConfigData();
     loadConfig();
-    send_log  = true;     // Enviar por MQTT status
+    //send_log  = true;     // Enviar por MQTT status
     mainRefresh = millis();
   }
 
@@ -76,7 +76,7 @@ void loop()
     if ((status_doc["maquina_ON"] == false) && (obj["machine_on"] == true))
     {
       status_doc["status"] = "NO ENERGY";
-      send_log = true;
+     // send_log = true;
     }
 
     // ----------------------------------------- check internet

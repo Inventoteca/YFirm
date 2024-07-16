@@ -18,7 +18,7 @@ void gps_distance()
     Serial.print(distance);
     Serial.println(" m");
     status_doc["status"] = "gps_alert";
-    send_log = true;
+//    send_log = true;
   }
 }
 
@@ -38,11 +38,11 @@ void save_gps_log()
     loadConfig();
     Serial.println("{\"upload_config\":true}");
     //saveConfig = true;
-    if ((status_doc["status"] != "waiting") && (send_log == false))
-    {
+    //if ((status_doc["status"] != "waiting") && (send_log == false))
+    //{
       status_doc["status"] = "waiting";
-      send_log = true;
-    }
+      //send_log = true;
+    //}
 
     gps_distance();
 
@@ -66,9 +66,9 @@ void gps_init()
 void gps_update()
 {
 
-  strcpy(buffer_union_publish, obj["id"].as<const char*>());
-  strcat(buffer_union_publish, publish_topic);
-  strcat(buffer_union_publish, gps_topic);
+  //strcpy(buffer_union_publish, obj["id"].as<const char*>());
+  //strcat(buffer_union_publish, publish_topic);
+  //strcat(buffer_union_publish, gps_topic);
 
   // -------------------------get GPS until a time
   smartDelay(2000);

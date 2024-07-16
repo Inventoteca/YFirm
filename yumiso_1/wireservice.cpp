@@ -99,7 +99,7 @@ void GetMotion()
     //servo1.detach();
 
     moved = true;
-    send_log = true;
+    //send_log = true;
     status_doc["status"] = "moved";
     counterServoOn = 0;
   }
@@ -137,7 +137,7 @@ void GetAngle()
     Serial.println(pitch);
 
     moved = true;
-    send_log = true;
+    //send_log = true;
     status_doc["status"] = "moved";
     counterServoOn = 0;
   }

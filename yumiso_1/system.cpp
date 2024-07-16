@@ -84,7 +84,7 @@ void system_init()
 
   buttonState = LOW;
   lastButtonState = HIGH;
-  send_log = true;            // Send initial value on start
+//  send_log = true;            // Send initial value on start
   status_doc["status"] = "power on";
 }
 
@@ -153,7 +153,7 @@ void loadConfig()
   obj["games"] = flag_games;
   obj["gift"] = flag_stock;
 
-  updated = obj["updated"].as<bool>();
+  //updated = obj["updated"].as<bool>();
 
   if (!obj["machine_on"].isNull())
   {

@@ -23,7 +23,7 @@ void IRAM_ATTR botonpress_monedas()
   status_doc["status"] = "playing";
   //Serial.print("M");Serial.println(flag_moneda);
   saveConfig = true;
-  send_log  = true;
+//  send_log  = true;
   
   return;
 }
@@ -40,6 +40,6 @@ void IRAM_ATTR botonpress_premios()
   status_doc["status"] = "gift";
   //Serial.print("P");Serial.println(flag_premio);
   saveConfig = true;
-  send_log  = true;
+  //send_log  = true;
   return;
 }

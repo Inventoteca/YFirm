@@ -311,7 +311,7 @@ void auto_onoff()
       obj["machine_on"] = true;
       status_doc["status"] = "auto ON";
       saveConfig = true;
-      send_log = true;
+      //send_log = true;
     }
   }
   else
@@ -325,7 +325,7 @@ void auto_onoff()
       obj["machine_on"] = false;
       status_doc["status"] = "auto OFF";
       saveConfig = true;
-      send_log = true;
+      //send_log = true;
     }
 
   }

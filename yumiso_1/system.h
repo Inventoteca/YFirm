@@ -32,7 +32,9 @@
 #include "RTClib.h"
 #include <Wire.h>
 #include <TinyGPSPlus.h>
-#include <Firebase_ESP_Client.h>
+//#include <Firebase_ESP_Client.h>
+#include <FirebaseClient.h>
+#include <WiFiClientSecure.h>
 #include <esp_task_wdt.h>
 #include <cmath> // 
 #include "SPI.h"
@@ -42,11 +44,12 @@
 #include "wifiservice.h"
 #include "pins.h"
 #include "filespiffs.h"
-#include "mqttservice.h"
+//#include "mqttservice.h"
 #include "wireservice.h"
 #include "clock.h"
 #include "gps_service.h"
-#include "firebasedb.h"
+//#include "firebasedb.h"
+#include "firestore.h"
 #include "counter.h"
 
 
@@ -72,6 +75,8 @@ extern unsigned long mainTime;
 extern const uint32_t connectTimeoutMs;
 extern unsigned long  s_timestamp;
 extern bool machine_on;
+//extern bool send_log;
+//extern bool updated;
 
 
 // ----------------------------------------GPS intervalos para gps

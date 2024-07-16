@@ -203,11 +203,11 @@ bool wifi_check()
       flag = true;
 
       // ------------------------ firebase connection
-      if (updated == false)
-      {
-        Serial.println("{\"load_firmware\":true}");
-        connectFirebase();
-      }
+      //      if (updated == false)
+      //    {
+      //    Serial.println("{\"load_firmware\":true}");
+      //connectFirebase();
+      //}
 
 
     }
