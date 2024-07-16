@@ -1,6 +1,6 @@
 {
   "enable_mqtt": true,
-  "mqtt_server": "137.184.86.135",
+  "mqtt_server": "broker.emqx.io",
   "mqtt_port": 1883,
   "test": true,
   "id": "M-E2-EA-MUEE-0",
